@@ -5,7 +5,7 @@ images:
 
 postgres:
 	@echo "Starting postgres..."
-	docker run --name postgres12 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+	@docker run --name postgres12 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
 	@echo "Postgres started."
 
 createdb:
@@ -28,5 +28,10 @@ migratedown:
 	@migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
 	@echo "Migrations rolled back."
 
+sqlc:
+	@echo "Generating sqlc..."
+	@sqlc generate
+	@echo "sqlc generated."
 
-.phony: images postgres createdb dropdb migrateup migratedown
+
+.phony: images postgres createdb dropdb migrateup migratedown sqlc
