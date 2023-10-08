@@ -33,5 +33,9 @@ sqlc:
 	@sqlc generate
 	@echo "sqlc generated."
 
+test:
+	@echo "Running tests..."
+	@go test -v -cover ./...
+	@echo "Tests ran."
 
 .phony: images postgres createdb dropdb migrateup migratedown sqlc

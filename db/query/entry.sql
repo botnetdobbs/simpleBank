@@ -11,7 +11,7 @@ WHERE id = $1;
 -- name: ListEntries :many
 SELECT id, account_id, amount, created_at
 FROM entries
-ORDER BY id
+ORDER BY id DESC
 LIMIT $1
 OFFSET $2;
 

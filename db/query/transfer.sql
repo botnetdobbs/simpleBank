@@ -11,7 +11,7 @@ WHERE id = $1;
 -- name: ListTransfers :many
 SELECT id, from_account_id, to_account_id, amount, created_at
 FROM transfers
-ORDER BY id
+ORDER BY id DESC
 LIMIT $1
 OFFSET $2;
 
