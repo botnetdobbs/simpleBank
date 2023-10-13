@@ -24,6 +24,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
 
     steps:
 
@@ -38,9 +41,11 @@ jobs:
 
     - name: Install Golang-migrate
       run: |
-        curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz
-        mv migrate.linux-amd64 /usr/local/bin/migrate
-        which migrate
+        mig_version=4.16.2
+        curl -L https://github.com/golang-migrate/migrate/releases/download/v${mig_version}/migrate.linux-amd64.deb -o migrate.deb
+        sudo dpkg -i migrate.deb
+        rm migrate.deb
+        migrate -version
 
     - name: Run Migrations
       run: make migrateup
